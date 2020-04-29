@@ -1,6 +1,6 @@
-//const Manager = require("./lib/Manager");
-//const Engineer = require("./lib/Engineer");
-//const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -69,10 +69,12 @@ function createManager() {
         // STUDENT: Add other questions here!
 
 
-    ]).then(answers => {
+    ]).then(({managerName, managerId, managerEmail, managerOfficeNum}) => {
         // STUDENT: Process the response by instatiating a new object in the Manager class
-        idArray.push(answers.managerId);
-
+        idArray.push(managerId);
+        
+        const manager = new Manager(managerName, managerId, managerEmail, managerOfficeNum);
+        teamMembers.push(manager);
         // Now call the next question set
         createTeam();
     });
@@ -98,6 +100,7 @@ function createTeam() {
             createIntern();
         } else {
             // Call render function correctly and pass in team array
+            renderHtmlPage();
         }
 
     });
@@ -154,12 +157,12 @@ function createEngineer() {
                 return "Please enter at least one character.";
             }
         }
-    ]).then(answers => {
-        idArray.push(answers.engineerId);
+    ]).then(({engineerName, engineerId, engineerEmail, engineerGithub}) => {
+        idArray.push(engineerId);
         // STUDENT: Make sure the id supplied is unique, then take the data supplied and 
         // instantiate the Engineer constructor.
-
-
+        const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
+        teamMembers.push(engineer);
         // STUDENT: When finished:
         // Add the new object to the team member array
         // Pass control back to the createTeam() function
@@ -218,11 +221,12 @@ function createIntern() {
                 return "Please enter at least one character.";
             }
         }
-    ]).then(answers => {
-        idArray.push(answers.internId);
+    ]).then(({internName, internId, internEmail, internSchool}) => {
+        idArray.push(internId);
         // STUDENT: Make sure the id supplied is unique, then take the data supplied and 
         // instantiate the Intern constructor.
-
+        const intern = new Intern(internName, internId, internEmail, internSchool);
+        teamMembers.push(intern);
 
         // STUDENT: When finished:
         // Add the new object to the team member array
@@ -235,7 +239,10 @@ function createIntern() {
 // and pass INTO it the teamMembers area; from there, write the HTML returned back to a file 
 // in a directory called output.
 function renderHtmlPage() {
-
+    const html = render(teamMembers);
+    fs.writeFile("./output/team.html", html, function(err){
+        if (err) throw err;
+    });
 }
 
 // This is our starter function.
