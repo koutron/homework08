@@ -1,4 +1,4 @@
-# Template Engine
+# Team Profile Generator
 
 ## Description
 This application prompts the user for information regarding a team of employees and generates an HTML file based off the information given.  The user can input the information of one manager and the manager's associated engineers and interns (of which there can be as many as the user wants defined).
