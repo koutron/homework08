@@ -42,7 +42,7 @@ function createManager() {
                 if (!idArray.includes(num) && !isNaN(num)) {
                     return true;
                 }
-                return "Please enter a unique numerical ID.";
+                return "Please enter a numerical ID.";
             }
         },
         {
