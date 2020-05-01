@@ -246,8 +246,6 @@ function renderHtmlPage() {
 }
 
 // This is our starter function.
-// Note that we use separate functions for different questions in inquirer to 
-// help keep code organized.
 function startMenu() {
 
     // Here we start things off by calling the createManager function
